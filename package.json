@@ -1,0 +1,20 @@
+{
+  "name": "file_sharing_app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/AshwiniParaye1/File_Sharing_App.git",
+  "author": "Ashwini <ashwiniparaye9309@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "serve": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
