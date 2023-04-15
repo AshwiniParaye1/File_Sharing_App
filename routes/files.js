@@ -1,5 +1,7 @@
 const router = require("express").Router();
 
+require("dotenv").config();
+
 const multer = require("multer");
 
 const path = require("path");
@@ -56,6 +58,49 @@ router.post("/", (req, res) => {
       //http://localhost:3000/files/234vfbgfhbt34-234235gsbvsadf
     });
   });
+
+  router.post("/send", async (req, res) => {
+    console.log(req.body);
+
+    const { uuid, emailTo, emailFrom } = req.body;
+
+    //validate request
+
+    if (!uuid || !emailFrom || !emailTo) {
+      return res.status(422).send({ error: "All fields are required." });
+    }
+
+    //get data from DB
+
+    const file = await File.findOne({ uuid: uuid });
+    if (file.sender) {
+      return res.status(422).send({ error: "Email already sent." });
+    }
+
+    file.sender = emailFrom;
+    file.receiver = emailTo;
+    const response = await file.save();
+
+    //send email
+
+    const sendMail = require("../services/emailService");
+
+    sendMail({
+      from: emailFrom,
+      to: emailTo,
+      subject: "inShare file sharing",
+      text: `${emailFrom} shared a file with you`,
+      html: require("../services/emailTemplate")({
+        emailFrom: emailFrom,
+        downloadLink: `${process.env.APP_BASE_URL}/files/${file.uuid}`,
+        size: parseInt(file.size / 1000) + " KB",
+        expires: "24 hours",
+      }),
+    });
+    return res.send({ success: true });
+  });
+
+  return res.send({ success: true });
 
   //response => link
 });
