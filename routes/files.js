@@ -100,8 +100,6 @@ router.post("/", (req, res) => {
     return res.send({ success: true });
   });
 
-  return res.send({ success: true });
-
   //response => link
 });
 
