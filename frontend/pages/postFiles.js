@@ -1,5 +1,6 @@
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { uploadFiles } from "./../services/api";
 
 const PostFiles = () => {
   const [file, setFile] = useState();
@@ -11,7 +12,20 @@ const PostFiles = () => {
     console.log("clicked");
   };
 
-  console.log(file);
+  useEffect(() => {
+    const getImage = async () => {
+      if (file) {
+        const data = new FormData();
+        data.append("name", file.name);
+        data.append("file", file);
+
+        let response = await uploadFiles(data);
+      }
+    };
+    getImage();
+  }, [file]);
+
+  console.log("uploaded files >>>> ", file);
   return (
     <>
       {" "}
@@ -36,7 +50,7 @@ const PostFiles = () => {
           </p>
 
           <button
-            className="w-40 h-11 text-white text-lg m-7 rounded-md bg-orange-500 border-2 border-orange-800"
+            className="w-40 h-11 text-white text-lg m-7 rounded-md bg-orange-500 border-2 border-orange-800 "
             onClick={() => onUploadClick()}
           >
             Upload
