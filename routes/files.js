@@ -29,7 +29,7 @@ let upload = multer({
 
 router.post("/", (req, res) => {
   //store file
-  console.log(req);
+  // console.log(req);
 
   upload(req, res, async (err) => {
     // console.log(res);
@@ -60,7 +60,7 @@ router.post("/", (req, res) => {
   });
 
   router.post("/send", async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
 
     const { uuid, emailTo, emailFrom } = req.body;
 

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import { uploadFiles } from "./../services/api";
+import { download, uploadFiles } from "./../services/api";
+import ViewFile from "./viewFile";
 
 const PostFiles = () => {
   const [file, setFile] = useState();
@@ -9,7 +10,7 @@ const PostFiles = () => {
 
   const onUploadClick = () => {
     fileInputRef.current.click();
-    console.log("clicked");
+    // console.log("clicked");
   };
 
   useEffect(() => {
@@ -20,12 +21,13 @@ const PostFiles = () => {
         data.append("file", file);
 
         let response = await uploadFiles(data);
+        console.log("response", response);
       }
     };
     getImage();
   }, [file]);
 
-  console.log("uploaded files >>>> ", file);
+  // console.log("uploaded files >>>> ", file);
   return (
     <>
       {" "}
@@ -43,7 +45,7 @@ const PostFiles = () => {
         >
           <h1 className="text-3xl m-10 text-orange-600 text-center">
             inShare! <br />{" "}
-            <span className="text-2xl">Simple File Sharing</span>
+            <span className="text-2xl text-amber-300">Simple File Sharing</span>
           </h1>
           <p className="text-center">
             Upload and share the Files with download link.
