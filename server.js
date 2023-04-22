@@ -28,6 +28,12 @@ connectDB();
 // app.set("view engine", "ejs");
 
 //Routes
+
+app.use("/", (req, res) => {
+  //store file
+  res.send("<h1>welcome</h1>");
+});
+
 app.use("/api/files", require("./routes/files"));
 
 // app.use("/files", require("./routes/show"));
